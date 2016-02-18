@@ -8,6 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                TextView text = (TextView)findViewById(R.id.testString);
+                new RestConnection.execute();
+                //text.setText(newText);
             }
         });
     }
@@ -49,4 +60,33 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    /*
+    public String getWeather(String locId){
+        String appId = "44db6a862fba0b067b1930da0d769e98";
+        URI uri = null;
+        final DefaultHttpClient httpClient = new DefaultHttpClient();
+
+
+        try {
+            uri = new URIBuilder()
+                    .setScheme("http")
+                    .setHost("api.openweathermap.org")
+                    .setPath("/data/2.5/weather")
+                    .setParameter("id", locId)
+                    .setParameter("appid", appId)
+                    .build();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        HttpGet httpGet = new HttpGet(uri);
+        String result = "NOT WORKING!!!!";
+        try {
+            HttpResponse response = httpClient.execute(httpGet);
+            result = response.getEntity().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }*/
 }

@@ -18,5 +18,6 @@
         android:text="Hello World!"
         android:layout_marginTop="88dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/testString" />
 </RelativeLayout>
