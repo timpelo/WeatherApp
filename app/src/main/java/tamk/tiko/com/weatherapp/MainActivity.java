@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -31,19 +32,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TextView text = (TextView)findViewById(R.id.testString);
+                TextView city = (TextView)findViewById(R.id.cityName);
                 RestConnection rest = new RestConnection();
                 String restResult = null;
                 try {
-                    restResult = rest.execute("2172797").get();
+                    restResult = rest.execute("634963").get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
                 JsonObject obj = transformStringToJson(restResult);
-                String temperture = getTempertureFromJson(obj);
+                String temperature = getTempertureFromJson(obj);
 
-                text.setText(temperture);
+                text.setText(temperature);
+                city.setText(getCityFromJson(obj));
             }
         });
     }
@@ -76,7 +79,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String getTempertureFromJson(JsonObject obj) {
-        String temperture = obj.get("temp").toString();
-        return temperture;
+        JsonElement element = obj.get("main");
+        JsonObject tmp = element.getAsJsonObject();
+        String temperature = tmp.get("temp").toString();
+        float tempInt = Float.parseFloat(temperature);
+        tempInt -= 272.15f;
+
+        temperature = "" + String.format("%.1f", tempInt) + " c";
+        return temperature;
+    }
+
+    public String getCityFromJson(JsonObject obj) {
+        String city = obj.get("name").toString();
+
+        return city;
     }
 }
