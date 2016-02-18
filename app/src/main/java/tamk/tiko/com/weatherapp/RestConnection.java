@@ -7,24 +7,24 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
  * Created by juhis5 on 18.2.2016.
  */
-public class RestConnection extends AsyncTask <Void, Void, String>{
-
+public class RestConnection extends AsyncTask <String, Void, String>{
 
     @Override
-    protected String doInBackground(Void... params) {
-        //String locId = params[0];
-        String locId = "2172797";
+    protected String doInBackground(String... params) {
+        String locId = params[0];
         String appId = "44db6a862fba0b067b1930da0d769e98";
         URI uri = null;
         final DefaultHttpClient httpClient = new DefaultHttpClient();
-
 
         try {
             uri = new URIBuilder()
@@ -39,13 +39,35 @@ public class RestConnection extends AsyncTask <Void, Void, String>{
         }
 
         HttpGet httpGet = new HttpGet(uri);
-        String result = "NOT WORKING!!!!";
+        InputStream stream = null;
         try {
             HttpResponse response = httpClient.execute(httpGet);
-            result = response.getEntity().toString();
+            stream = response.getEntity().getContent();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        String result = convertStreamToString(stream);
         return result;
+    }
+
+    private String convertStreamToString(InputStream is) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
     }
 }

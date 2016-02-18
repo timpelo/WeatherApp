@@ -18,6 +18,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,8 +34,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TextView text = (TextView)findViewById(R.id.testString);
-                new RestConnection.execute();
-                //text.setText(newText);
+                RestConnection rest = new RestConnection();
+                String newText = null;
+                try {
+                    newText = rest.execute("2172797").get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                text.setText(newText);
             }
         });
     }
