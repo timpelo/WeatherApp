@@ -13,7 +13,7 @@ public class AppSettings {
     public AppSettings() {
         unit = 1;
         useLocalWeather = true;
-        selectedCityId = null;
+        selectedCityId = "0";
     }
 
     public int getUnit() {

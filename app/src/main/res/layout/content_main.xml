@@ -62,4 +62,12 @@
         android:layout_alignLeft="@id/horizontalSeparator"
         android:textSize="40dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SETTINGS"
+        android:id="@+id/settingsButton"
+        android:layout_below="@+id/horizontalSeparator"
+        android:layout_toEndOf="@+id/cityName" />
+
 </RelativeLayout>

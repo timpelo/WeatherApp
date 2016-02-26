@@ -17,14 +17,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/unitSwitch"
         android:layout_marginTop="78dp"
+        android:layout_marginEnd="39dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Celsius"
+        android:text="Celsius/Fahrenheit"
         android:id="@+id/textView"
         android:layout_alignBottom="@+id/unitSwitch"
         android:layout_alignParentStart="true" />
@@ -33,17 +34,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Fahrenheit"
+        android:text="Use Local Weather"
         android:id="@+id/textView2"
-        android:layout_alignTop="@+id/unitSwitch"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/localSwitch"
+        android:checked="false"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_alignStart="@+id/unitSwitch" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use Local Weather"
-        android:id="@+id/localButton"
-        android:layout_below="@+id/textView"
+        android:text="Back"
+        android:id="@+id/backButton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp" />
+        android:layout_marginBottom="78dp" />
+
 </RelativeLayout>
