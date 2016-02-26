@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button settingsButton = (Button) findViewById(R.id.settingsButton);
+        this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
         ImageView refresh = (ImageView) findViewById(R.id.refreshButton);
         refresh.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
                 text.setText(temperature);
                 city.setText(getCityFromJson(obj));
+
+                Intent intent = getIntent();
+                String name = intent.getStringExtra("cityId");
+                city.setText(name);
             }
         });
 

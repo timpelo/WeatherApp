@@ -13,11 +13,10 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         appSettings = new AppSettings();
+        this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        Switch unitSwitch = (Switch) findViewById(R.id.unitSwitch);
-        Switch localSwitch = (Switch) findViewById(R.id.localSwitch);
         Button backButton = (Button) findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -26,6 +25,11 @@ public class SettingsActivity extends AppCompatActivity {
                 goToMainActivity();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        goToMainActivity();
     }
 
     private void goToMainActivity() {
