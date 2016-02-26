@@ -12,17 +12,27 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        appSettings = new AppSettings();
-        this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+
+        appSettings = new AppSettings();
+        this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        Button infoButton = (Button) findViewById(R.id.infoButton);
         Button backButton = (Button) findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToMainActivity();
+            }
+        });
+
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, InfoActivity.class);
+                startActivity(intent);
             }
         });
     }
