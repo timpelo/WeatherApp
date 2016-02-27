@@ -32,3 +32,5 @@ Lisäksi kaikille näytöille jonkinlainen väriteema. Ei mitään liian räike�
 Gimpillä/paintilla/photarilla kuvat kaikistä näytöistä ja mahdollisesti jokin placeholder niin, että saa yleisilmeen.
 Ja myös heksavärikoodit näyttökuviin (esim #ffffff). Laita vaikka heksakoodit näytön ulkopuolelle ja vedä viiva kyseiseen väriin
 näyttöön.
+
+Yks idea vois olla tehdä sillee, et taustaväri muuttuu säätilan mukaan. Aurinkoisella olis vaik keltanen ja sellanen harmaa sitte ku on loskapaskaa?
