@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,6 +23,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
+
+import org.json.JSONArray;
 
 import java.util.concurrent.ExecutionException;
 
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     protected double mLatitude = 0;
     protected double mLongitude = 0;
     protected boolean initText = true;
+
+    protected String description;
 
 
     @Override
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             public void onClick(View v) {
                 TextView text = (TextView)findViewById(R.id.tempertureText);
                 TextView city = (TextView)findViewById(R.id.cityName);
+                TextView desc = (TextView) findViewById(R.id.description);
                 RestConnectionCurrent rest = new RestConnectionCurrent();
                 TextView unitText = (TextView) findViewById(R.id.unitText);
                 String restResult = null;
@@ -63,7 +69,9 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                 }
                 JsonObject obj = transformStringToJson(restResult);
                 String temperature = getTempertureFromJson(obj);
+                getWeatherConditionFromJson(obj);
 
+                desc.setText(description);
                 text.setText(temperature);
                 unitText.setText(unitString);
                 city.setText(getCityFromJson(obj));
@@ -85,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     public void initTexts(){
         TextView text = (TextView)findViewById(R.id.tempertureText);
         TextView city = (TextView)findViewById(R.id.cityName);
+        TextView desc = (TextView) findViewById(R.id.description);
         RestConnectionCurrent rest = new RestConnectionCurrent();
         String restResult = null;
         try {
@@ -97,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         JsonObject obj = transformStringToJson(restResult);
         String temperature = getTempertureFromJson(obj);
 
+        getWeatherConditionFromJson(obj);
+        desc.setText(description);
         text.setText(temperature);
         city.setText(getCityFromJson(obj));
 
@@ -136,6 +147,16 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
 
         return temperature;
+    }
+
+    public void getWeatherConditionFromJson(JsonObject obj) {
+        JsonArray element = obj.getAsJsonArray("weather");
+        JsonElement tmp = element.get(0);
+        JsonObject obj2 = tmp.getAsJsonObject();
+
+        String description = obj2.get("description").toString();
+
+        this.description = description;
     }
 
     public String getCityFromJson(JsonObject obj) {
