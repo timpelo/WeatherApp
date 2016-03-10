@@ -20,54 +20,70 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Town"
+        android:text="Tampere"
         android:id="@+id/cityName"
         android:textColor="#ffffff"
-        android:textSize="55dp"
-        android:layout_marginBottom="126dp"
-        android:layout_alignParentBottom="true"
+        android:textSize="45dp"
+        android:layout_marginBottom="50dp"
+        android:layout_alignBottom="@+id/centerPosition"
         android:layout_centerHorizontal="true" />
 
-    <View
-        android:layout_width="5dp"
-        android:layout_height="250dp"
-        android:background="#ffffff"
+    <ImageView
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/horizontalSeparator" />
+        android:layout_centerVertical="true"
+        android:id="@+id/centerPosition"/>
+
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginLeft="30dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_alignTop="@+id/centerPosition"
+        android:layout_alignStart="@+id/centerPosition"
+        android:layout_marginStart="25dp"
+        android:id="@+id/weathericon"
         android:src="@drawable/icon_sunny" />
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/cityName"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@id/cityName"
+        android:layout_alignBottom="@id/cityName"
         android:id="@+id/refreshButton"
-        android:layout_marginTop="100dp"
+        android:layout_marginEnd="-50dp"
         android:src="@drawable/refresh_icon" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+15°C"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="40dp"
+        android:text="-25"
+        android:layout_alignTop="@+id/centerPosition"
+        android:layout_alignEnd="@+id/unitText"
+        android:layout_marginEnd="35dp"
         android:id="@+id/tempertureText"
         android:textColor="#ffffff"
-        android:layout_alignLeft="@id/horizontalSeparator"
-        android:textSize="40dp" />
+        android:textSize="80dp" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SETTINGS"
+        android:text="°C"
+        android:layout_alignTop="@+id/centerPosition"
+        android:layout_alignEnd="@+id/centerPosition"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/unitText"
+        android:textColor="#ffffff"
+        android:textSize="35dp" />
+
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/menu"
         android:id="@+id/settingsButton"
-        android:layout_below="@+id/horizontalSeparator"
-        android:layout_toEndOf="@+id/cityName" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

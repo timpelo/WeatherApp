@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             public void onClick(View v) {
                 TextView text = (TextView)findViewById(R.id.tempertureText);
                 TextView city = (TextView)findViewById(R.id.cityName);
+                TextView unitText = (TextView) findViewById(R.id.unitText);
                 RestConnection rest = new RestConnection();
                 String restResult = null;
                 try {
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                 String temperature = getTempertureFromJson(obj);
 
                 text.setText(temperature);
+                unitText.setText(unitString);
                 city.setText(getCityFromJson(obj));
 
                 Intent intent = getIntent();
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         // Used only if temperature will be shown with one decimal.
         //temperature = "" + String.format("%.1f", tempInt) + "°c";
 
-        temperature = "" + tempInt + unitString;
+        temperature = "" + tempInt;
 
 
 

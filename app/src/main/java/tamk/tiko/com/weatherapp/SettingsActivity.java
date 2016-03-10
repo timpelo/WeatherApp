@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Button;
 
@@ -19,23 +20,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         appSettings = new AppSettings();
         this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        Button infoButton = (Button) findViewById(R.id.infoButton);
-        Button backButton = (Button) findViewById(R.id.backButton);
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToMainActivity();
-            }
-        });
-
-        infoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, InfoActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -52,11 +36,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void changeUnit() {
-        Switch unitSwitch = (Switch) findViewById(R.id.unitSwitch);
-        if(unitSwitch.isChecked()) {
-            appSettings.setUnit(2);
-        } else {
+        RadioButton buttonC = (RadioButton) findViewById(R.id.radioC);
+
+        if(buttonC.isChecked()) {
             appSettings.setUnit(1);
+        } else {
+            appSettings.setUnit(2);
         }
     }
 

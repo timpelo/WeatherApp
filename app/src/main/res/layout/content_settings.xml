@@ -12,39 +12,112 @@
     tools:context="tamk.tiko.com.weatherapp.SettingsActivity"
     tools:showIn="@layout/activity_settings">
 
-    <Switch
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/unitSwitch"
-        android:layout_marginTop="78dp"
-        android:layout_marginEnd="39dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Unit"
+        android:id="@+id/unitText"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="87dp" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/unitText"
+        android:id="@+id/radioGroup"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Celcius"
+            android:id="@+id/radioC"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="33dp"
+            android:checked="true" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fahrenheit"
+            android:id="@+id/radioF"
+            android:layout_below="@+id/radioC"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:checked="false" />
+    </RadioGroup>
+
+    <View
+        android:layout_alignBottom="@id/radioGroup"
+        android:layout_height="2dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:background="#0ff000"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/verticalSeparator" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Celsius/Fahrenheit"
-        android:id="@+id/textView"
-        android:layout_alignBottom="@+id/unitSwitch"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:id="@+id/backButton"
-        android:layout_alignParentBottom="true"
+        android:text="Version"
+        android:id="@+id/versionText"
+        android:layout_above="@+id/textView4"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="78dp" />
+        android:layout_marginBottom="25dp" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About app"
-        android:id="@+id/infoButton"
-        android:layout_alignParentBottom="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Developers"
+        android:id="@+id/textView4"
+        android:layout_above="@+id/jani"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Jani Timonen"
+        android:id="@+id/jani"
+        android:layout_alignBottom="@+id/juho"
+        android:layout_marginBottom="25dp"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Juho Lahtinen"
+        android:id="@+id/juho"
+        android:layout_alignBottom="@+id/veikka"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Veikka Saaristo"
+        android:id="@+id/veikka"
+        android:layout_alignBottom="@+id/janne"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Janne Koskinen"
+        android:id="@+id/janne"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"/>
+
 
 </RelativeLayout>
