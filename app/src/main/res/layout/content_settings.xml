@@ -30,24 +30,6 @@
         android:layout_alignBottom="@+id/unitSwitch"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Use Local Weather"
-        android:id="@+id/textView2"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
-
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/localSwitch"
-        android:checked="false"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_alignStart="@+id/unitSwitch" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

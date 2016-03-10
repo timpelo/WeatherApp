@@ -16,6 +16,8 @@ import com.google.gson.JsonParser;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+    private String unitString = "°C";
+    private int unit = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // Used only if temperature will be shown with one decimal.
         //temperature = "" + String.format("%.1f", tempInt) + "°c";
 
-        temperature = "" + tempInt + "°C";
+        temperature = "" + tempInt + unitString;
 
 
 
@@ -89,5 +91,26 @@ public class MainActivity extends AppCompatActivity {
         city = city.replaceAll("^\"|\"$", "");
 
         return city;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Bundle data = getIntent().getExtras();
+        if(data != null) {
+            unit = data.getInt("unit");
+
+            if(unit != 0) {
+                switch (unit) {
+                    case 1:
+                        unitString = "°C";
+                        break;
+                    case 2:
+                        unitString = " F";
+                        break;
+                }
+            }
+        }
     }
 }

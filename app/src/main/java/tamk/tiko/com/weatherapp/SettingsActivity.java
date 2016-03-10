@@ -14,6 +14,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
 
         appSettings = new AppSettings();
@@ -44,12 +45,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void goToMainActivity() {
         changeUnit();
-        checkLocalWeatherSetting();
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("unit", appSettings.getUnit());
-        intent.putExtra("cityId", appSettings.getSelectedCityId());
-        intent.putExtra("useLocal", appSettings.isUseLocalWeather());
         startActivity(intent);
     }
 
@@ -60,11 +58,6 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             appSettings.setUnit(1);
         }
-    }
-
-    private void checkLocalWeatherSetting() {
-        Switch localSwitch = (Switch) findViewById(R.id.localSwitch);
-        appSettings.setUseLocalWeather(localSwitch.isChecked());
     }
 
 }
