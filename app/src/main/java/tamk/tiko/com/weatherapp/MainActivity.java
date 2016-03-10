@@ -30,11 +30,10 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
     protected GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
+    protected double mLatitude = 0;
+    protected double mLongitude = 0;
+    protected boolean initText = true;
 
-    protected String mLatitudeLabel;
-    protected String mLongitudeLabel;
-    protected TextView mLatitudeText;
-    protected TextView mLongitudeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +41,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         setContentView(R.layout.activity_main);
         Button settingsButton = (Button) findViewById(R.id.settingsButton);
         this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
-        mLatitudeText = (TextView) findViewById((R.id.cityName));
-        mLongitudeText = (TextView) findViewById((R.id.tempertureText));
 
         buildGoogleApiClient();
 
@@ -54,11 +50,11 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             public void onClick(View v) {
                 TextView text = (TextView)findViewById(R.id.tempertureText);
                 TextView city = (TextView)findViewById(R.id.cityName);
+                RestConnectionCurrent rest = new RestConnectionCurrent();
                 TextView unitText = (TextView) findViewById(R.id.unitText);
-                RestConnection rest = new RestConnection();
                 String restResult = null;
                 try {
-                    restResult = rest.execute("634963").get();
+                    restResult = rest.execute("" + mLatitude,"" + mLongitude).get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
                 Intent intent = getIntent();
                 String name = intent.getStringExtra("cityId");
-                city.setText(name);
+                city.setText(getCityFromJson(obj));
             }
         });
 
@@ -83,6 +79,29 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
         });
+    }
+
+    public void initTexts(){
+        TextView text = (TextView)findViewById(R.id.tempertureText);
+        TextView city = (TextView)findViewById(R.id.cityName);
+        RestConnectionCurrent rest = new RestConnectionCurrent();
+        String restResult = null;
+        try {
+            restResult = rest.execute("" + mLatitude,"" + mLongitude).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        JsonObject obj = transformStringToJson(restResult);
+        String temperature = getTempertureFromJson(obj);
+
+        text.setText(temperature);
+        city.setText(getCityFromJson(obj));
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("cityId");
+        city.setText(getCityFromJson(obj));
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -159,10 +178,12 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         }
 
         if (mLastLocation != null) {
-            mLatitudeText.setText(String.format("%s: %f", mLatitudeLabel,
-                    mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.format("%s: %f", mLongitudeLabel,
-                    mLastLocation.getLongitude()));
+            mLatitude = mLastLocation.getLatitude();
+            mLongitude = mLastLocation.getLongitude();
+            if(initText) {
+                initTexts();
+                initText = false;
+            }
         } else {
 
         }
