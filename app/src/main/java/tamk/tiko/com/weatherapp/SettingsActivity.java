@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
     private AppSettings appSettings;
@@ -16,6 +17,10 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+        String versionNumber = getResources().getString(R.string.version);
+        TextView version = (TextView) findViewById(R.id.versionText);
+        version.setText("Version: " + versionNumber);
 
 
         appSettings = new AppSettings();
