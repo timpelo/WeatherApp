@@ -15,9 +15,7 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
         this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
-        String versionNumber = "0.1";
-        TextView version = (TextView) findViewById(R.id.versionText);
-        version.setText("Version: " + versionNumber);
+
     }
 
     @Override
