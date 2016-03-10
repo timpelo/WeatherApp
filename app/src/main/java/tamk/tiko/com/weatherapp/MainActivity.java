@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -213,5 +214,23 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        TextView temp = (TextView) findViewById(R.id.tempertureText);
+        bundle.putString("temperture", temp.getText().toString());
+        Log.d("MYBUG", temp.getText().toString());
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle bundle) {
+        super.onRestoreInstanceState(bundle);
+
+        TextView temp = (TextView) findViewById(R.id.tempertureText);
+        String tempText = bundle.getString("temperture");
+        Log.d("MYBUG", tempText);
+        temp.setText(tempText);
     }
 }
