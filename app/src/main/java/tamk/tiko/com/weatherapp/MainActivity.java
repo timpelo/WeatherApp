@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     protected Location mLastLocation;
     protected double mLatitude = 0;
     protected double mLongitude = 0;
+    protected boolean initText = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +177,10 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         if (mLastLocation != null) {
             mLatitude = mLastLocation.getLatitude();
             mLongitude = mLastLocation.getLongitude();
+            if(initText) {
+                initTexts();
+                initText = false;
+            }
         } else {
 
         }
