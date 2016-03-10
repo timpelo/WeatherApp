@@ -17,11 +17,12 @@ import java.net.URISyntaxException;
 /**
  * Created by juhis5 on 18.2.2016.
  */
-public class RestConnection extends AsyncTask <String, Void, String>{
+public class RestConnectionCurrent extends AsyncTask <String, Void, String>{
 
     @Override
     protected String doInBackground(String... params) {
-        String locId = params[0];
+        String lat = params[0];
+        String lon = params[1];
         String appId = "44db6a862fba0b067b1930da0d769e98";
         URI uri = null;
         final DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -31,7 +32,8 @@ public class RestConnection extends AsyncTask <String, Void, String>{
                     .setScheme("http")
                     .setHost("api.openweathermap.org")
                     .setPath("/data/2.5/weather")
-                    .setParameter("id", locId)
+                    .setParameter("lat", lat)
+                    .setParameter("lon", lon)
                     .setParameter("appid", appId)
                     .build();
         } catch (URISyntaxException e) {
