@@ -2,10 +2,12 @@ package tamk.tiko.com.weatherapp;
 
 import android.location.Location;
 import android.location.LocationManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +24,9 @@ import com.google.android.gms.location.LocationServices;
 
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener{
+    private String unitString = "°C";
+    private int unit = 1;
 
     protected GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button settingsButton = (Button) findViewById(R.id.settingsButton);
+        this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
         mLatitudeText = (TextView) findViewById((R.id.cityName));
         mLongitudeText = (TextView) findViewById((R.id.tempertureText));
@@ -62,6 +68,17 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
                 text.setText(temperature);
                 city.setText(getCityFromJson(obj));
+
+                Intent intent = getIntent();
+                String name = intent.getStringExtra("cityId");
+                city.setText(name);
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
         });
     }
@@ -92,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         // Used only if temperature will be shown with one decimal.
         //temperature = "" + String.format("%.1f", tempInt) + "°c";
 
-        temperature = "" + tempInt + "°C";
+        temperature = "" + tempInt + unitString;
 
 
 
@@ -104,6 +121,27 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         city = city.replaceAll("^\"|\"$", "");
 
         return city;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Bundle data = getIntent().getExtras();
+        if(data != null) {
+            unit = data.getInt("unit");
+
+            if(unit != 0) {
+                switch (unit) {
+                    case 1:
+                        unitString = "°C";
+                        break;
+                    case 2:
+                        unitString = " F";
+                        break;
+                }
+            }
+        }
     }
 
     @Override
