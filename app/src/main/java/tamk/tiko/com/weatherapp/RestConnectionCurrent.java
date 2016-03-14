@@ -1,5 +1,6 @@
 package tamk.tiko.com.weatherapp;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpResponse;
@@ -19,11 +20,16 @@ import java.net.URISyntaxException;
  */
 public class RestConnectionCurrent extends AsyncTask <String, Void, String>{
 
+    private Context host;
+    public RestConnectionCurrent(Context host) {
+        this.host = host;
+    }
+
     @Override
     protected String doInBackground(String... params) {
         String lat = params[0];
         String lon = params[1];
-        String appId = "44db6a862fba0b067b1930da0d769e98";
+        String appId = host.getResources().getString(R.string.appid);
         URI uri = null;
         final DefaultHttpClient httpClient = new DefaultHttpClient();
 

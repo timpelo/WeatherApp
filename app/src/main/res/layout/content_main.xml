@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="tamk.tiko.com.weatherapp.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:background="#1ea0fd"
+    android:background="@drawable/bg"
     android:id="@+id/separator">
 
 
@@ -53,6 +53,7 @@
         android:layout_alignTop="@+id/centerPosition"
         android:layout_alignStart="@+id/centerPosition"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/weathericon"
         android:src="@drawable/icon_sunny" />
 
@@ -72,9 +73,10 @@
         android:text=""
         android:layout_alignTop="@+id/centerPosition"
         android:layout_alignEnd="@+id/unitText"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="35dp"
         android:id="@+id/tempertureText"
-        android:textColor="#ffffff"
+        android:textColor="#1ea0fd"
         android:textSize="80dp" />
 
     <TextView
@@ -83,10 +85,10 @@
         android:text="°C"
         android:layout_alignTop="@+id/centerPosition"
         android:layout_alignEnd="@+id/centerPosition"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:id="@+id/unitText"
-        android:textColor="#ffffff"
+        android:textColor="#1ea0fd"
         android:textSize="35dp" />
 
     <Button
@@ -97,7 +99,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"/>
-
 
 
 </RelativeLayout>

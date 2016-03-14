@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         TextView text = (TextView)findViewById(R.id.tempertureText);
         TextView city = (TextView)findViewById(R.id.cityName);
         TextView desc = (TextView) findViewById(R.id.description);
-        RestConnectionCurrent rest = new RestConnectionCurrent();
+        RestConnectionCurrent rest = new RestConnectionCurrent(this);
         TextView unitText = (TextView) findViewById(R.id.unitText);
         String restResult = null;
         try {

@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="tamk.tiko.com.weatherapp.SettingsActivity"
     tools:showIn="@layout/activity_settings"
-    android:background="#1ea0fd">
+    android:background="@drawable/bg">
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,14 +53,7 @@
             android:textColor="#ffffff" />
     </RadioGroup>
 
-    <View
-        android:layout_alignBottom="@id/radioGroup"
-        android:layout_height="2dp"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="-20dp"
-        android:background="#ffffff"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/verticalSeparator" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +64,7 @@
         android:layout_above="@+id/textView4"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
-        android:textColor="#ffffff" />
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,7 +75,7 @@
         android:layout_above="@+id/jani"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
-        android:textColor="#ffffff" />
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -93,7 +86,7 @@
         android:layout_alignBottom="@+id/juho"
         android:layout_marginBottom="25dp"
         android:layout_centerHorizontal="true"
-        android:textColor="#eeeeee" />
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -104,7 +97,7 @@
         android:layout_alignBottom="@+id/veikka"
         android:layout_marginBottom="25dp"
         android:layout_centerHorizontal="true"
-        android:textColor="#eeeeee" />
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -115,7 +108,7 @@
         android:layout_alignBottom="@+id/janne"
         android:layout_marginBottom="25dp"
         android:layout_centerHorizontal="true"
-        android:textColor="#eeeeee" />
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -126,7 +119,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="40dp"
-        android:textColor="#eeeeee" />
+        android:textColor="#1ea0fd" />
 
 
 </RelativeLayout>
