@@ -10,10 +10,100 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="tamk.tiko.com.weatherapp.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:background="@drawable/bg"
+    android:id="@+id/separator">
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/cityName"
+        android:layout_marginBottom="-20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Description"
+        android:id="@+id/description"
+        android:textColor="#ffffff"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tampere"
+        android:id="@+id/cityName"
+        android:textColor="#ffffff"
+        android:textSize="45dp"
+        android:layout_marginBottom="50dp"
+        android:layout_alignBottom="@+id/centerPosition"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/centerPosition"/>
+
+
+    <ImageView
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_alignTop="@+id/centerPosition"
+        android:layout_alignStart="@+id/centerPosition"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/weathericon" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@id/cityName"
+        android:layout_alignBottom="@id/cityName"
+        android:id="@+id/refreshButton"
+        android:layout_marginEnd="-50dp"
+        android:src="@drawable/refresh_icon"
+        android:onClick="updateWeather" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_alignTop="@+id/centerPosition"
+        android:layout_alignEnd="@+id/unitText"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="35dp"
+        android:id="@+id/tempertureText"
+        android:textColor="#1ea0fd"
+        android:textSize="80dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="°C"
+        android:layout_alignTop="@+id/centerPosition"
+        android:layout_alignEnd="@+id/centerPosition"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/unitText"
+        android:textColor="#1ea0fd"
+        android:textSize="35dp" />
+
+    <Button
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:background="@drawable/menu"
+        android:id="@+id/settingsButton"
+        android:layout_alignParentEnd="true"
+        android:onClick="openSettings" />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/forecast"
+        android:text="3 day forecast"
+        android:textColor="#ffffff"
+        android:background="@drawable/icon_calendar"
+        android:onClick="forecast"/>
 </RelativeLayout>

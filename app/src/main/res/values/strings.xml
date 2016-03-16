@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">Clear Skies</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_forecast">ForecastActivity</string>
+    <string name="appwidget_text">KURU</string>
+    <string name="add_widget">Add widget</string>
 </resources>

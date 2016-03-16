@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="city">Tampere</string>
+    <string name="condition_id">250</string>
+    <string name="condition">Cloudy</string>
+    <string name="celsius">15</string>
+    <string name="fahrenheit">25</string>
+    <!--1 = in units celsius, 2 = fahrenheit -->
+    <string name="unit">1</string>
+    <string name="longitude">0</string>
+    <string name="latitude">0</string>
+</resources>
