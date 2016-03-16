@@ -14,7 +14,8 @@ public class WeatherWidget extends AppWidgetProvider {
                                 int appWidgetId) {
 
         CharSequence widgetLocation = context.getString(R.string.city);
-        CharSequence widgetTemp = context.getString(R.string.celsius);
+        CharSequence widgetTemp = context.getString(R.string.celsius) +
+                "℃";
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
         views.setTextViewText(R.id.locationView, widgetLocation);
