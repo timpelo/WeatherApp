@@ -245,4 +245,9 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             weatherIcon.setBackgroundResource(R.drawable.icon_sunny);
         }
     }
+
+    public void forecast(View v) {
+        Intent intent = new Intent(this, ForecastActivity.class);
+        startActivity(intent);
+    }
 }

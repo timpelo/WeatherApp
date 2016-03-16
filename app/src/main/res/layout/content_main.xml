@@ -101,5 +101,12 @@
         android:layout_marginTop="10dp"
         android:onClick="openSettings" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forecast"
+        android:text="Forecast"
+        android:onClick="forecast"/>
+
 
 </RelativeLayout>
