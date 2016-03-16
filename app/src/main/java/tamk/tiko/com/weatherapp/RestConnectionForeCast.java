@@ -23,7 +23,6 @@ public class RestConnectionForeCast extends AsyncTask <String, Void, String>{
     protected String doInBackground(String... params) {
         String lat = params[0];
         String lon = params[1];
-        String cnt = params[2];
         String appId = "44db6a862fba0b067b1930da0d769e98";
         URI uri = null;
         final DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -32,10 +31,9 @@ public class RestConnectionForeCast extends AsyncTask <String, Void, String>{
             uri = new URIBuilder()
                     .setScheme("http")
                     .setHost("api.openweathermap.org")
-                    .setPath("/data/2.5/forecast/daily")
+                    .setPath("/data/2.5/forecast")
                     .setParameter("lat", lat)
                     .setParameter("lon", lon)
-                    .setParameter("cnt", cnt)
                     .setParameter("appid", appId)
                     .build();
         } catch (URISyntaxException e) {
