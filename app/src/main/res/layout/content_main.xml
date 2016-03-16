@@ -54,8 +54,7 @@
         android:layout_alignStart="@+id/centerPosition"
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
-        android:id="@+id/weathericon"
-        android:src="@drawable/icon_sunny" />
+        android:id="@+id/weathericon" />
 
     <ImageView
         android:layout_width="40dp"
@@ -92,13 +91,13 @@
         android:textSize="35dp" />
 
     <Button
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/menu"
         android:id="@+id/settingsButton"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginTop="7dp"
         android:onClick="openSettings" />
 
     <Button
