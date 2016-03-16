@@ -10,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="tamk.tiko.com.weatherapp.SettingsActivity"
-    tools:showIn="@layout/activity_settings">
+    tools:showIn="@layout/activity_settings"
+    android:background="@drawable/bg">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,9 +19,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Unit"
         android:id="@+id/unitText"
+        android:layout_marginTop="49dp"
+        android:textColor="#ffffff"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="87dp" />
+        android:layout_alignParentStart="true" />
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +38,9 @@
             android:layout_below="@+id/textView"
             android:layout_alignParentStart="true"
             android:layout_marginTop="33dp"
-            android:checked="true" />
+            android:buttonTint="#ffffff"
+            android:checked="true"
+            android:textColor="#ffffff" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -46,17 +50,12 @@
             android:layout_below="@+id/radioC"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
-            android:checked="false" />
+            android:buttonTint="#ffffff"
+            android:checked="false"
+            android:textColor="#ffffff" />
     </RadioGroup>
 
-    <View
-        android:layout_alignBottom="@id/radioGroup"
-        android:layout_height="2dp"
-        android:layout_width="match_parent"
-        android:layout_marginTop="40dp"
-        android:background="#0ff000"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/verticalSeparator" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,7 +65,8 @@
         android:id="@+id/versionText"
         android:layout_above="@+id/textView4"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp" />
+        android:layout_marginBottom="25dp"
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,7 +76,8 @@
         android:id="@+id/textView4"
         android:layout_above="@+id/jani"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp" />
+        android:layout_marginBottom="15dp"
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -86,7 +87,8 @@
         android:id="@+id/jani"
         android:layout_alignBottom="@+id/juho"
         android:layout_marginBottom="25dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,7 +98,8 @@
         android:id="@+id/juho"
         android:layout_alignBottom="@+id/veikka"
         android:layout_marginBottom="25dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,7 +110,7 @@
         android:layout_alignBottom="@+id/janne"
         android:layout_marginBottom="25dp"
         android:layout_centerHorizontal="true"
-        />
+        android:textColor="#1ea0fd" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -117,7 +120,8 @@
         android:id="@+id/janne"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="40dp"
+        android:textColor="#1ea0fd" />
 
 
 </RelativeLayout>

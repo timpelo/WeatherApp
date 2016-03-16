@@ -1,11 +1,14 @@
 package tamk.tiko.com.weatherapp;
 
+import android.app.Activity;
 import android.location.Location;
 import android.location.LocationManager;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,81 +41,21 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     protected boolean initText = true;
 
     protected String description;
+    protected int descriptionId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button settingsButton = (Button) findViewById(R.id.settingsButton);
         this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
         buildGoogleApiClient();
-
-        ImageView refresh = (ImageView) findViewById(R.id.refreshButton);
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView text = (TextView)findViewById(R.id.tempertureText);
-                TextView city = (TextView)findViewById(R.id.cityName);
-                TextView desc = (TextView) findViewById(R.id.description);
-                RestConnectionCurrent rest = new RestConnectionCurrent();
-                TextView unitText = (TextView) findViewById(R.id.unitText);
-                String restResult = null;
-                try {
-                    restResult = rest.execute("" + mLatitude,"" + mLongitude).get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                JsonObject obj = transformStringToJson(restResult);
-                String temperature = getTempertureFromJson(obj);
-                getWeatherConditionFromJson(obj);
-
-                desc.setText(description);
-                text.setText(temperature);
-                unitText.setText(unitString);
-                city.setText(getCityFromJson(obj));
-
-                Intent intent = getIntent();
-                String name = intent.getStringExtra("cityId");
-                city.setText(getCityFromJson(obj));
-            }
-        });
-
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
     }
 
-    public void initTexts(){
-        TextView text = (TextView)findViewById(R.id.tempertureText);
-        TextView city = (TextView)findViewById(R.id.cityName);
-        TextView desc = (TextView) findViewById(R.id.description);
-        RestConnectionCurrent rest = new RestConnectionCurrent();
-        String restResult = null;
-        try {
-            restResult = rest.execute("" + mLatitude,"" + mLongitude).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        JsonObject obj = transformStringToJson(restResult);
-        String temperature = getTempertureFromJson(obj);
-
-        getWeatherConditionFromJson(obj);
-        desc.setText(description);
-        text.setText(temperature);
-        city.setText(getCityFromJson(obj));
-
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("cityId");
-        city.setText(getCityFromJson(obj));
+    public void openSettings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        intent.putExtra("unit", unit);
+        startActivity(intent);
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -154,8 +97,12 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         JsonObject obj2 = tmp.getAsJsonObject();
 
         String description = obj2.get("description").toString();
-
+        int descriptionId = Integer.parseInt(obj2.get("id").toString());
+        description = description.replaceAll("^\"|\"$", "");
         this.description = description;
+        this.descriptionId = descriptionId;
+
+
     }
 
     public String getCityFromJson(JsonObject obj) {
@@ -202,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             mLatitude = mLastLocation.getLatitude();
             mLongitude = mLastLocation.getLongitude();
             if(initText) {
-                initTexts();
+                updateWeather(getWindow().findViewById(R.id.default_control_frame));
                 initText = false;
             }
         } else {
@@ -223,6 +170,14 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     @Override
+    public void onBackPressed() {
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
@@ -233,6 +188,61 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         super.onStop();
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        TextView temp = (TextView) findViewById(R.id.tempertureText);
+        bundle.putString("temperture", temp.getText().toString());
+        Log.d("MYBUG", temp.getText().toString());
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle bundle) {
+        super.onRestoreInstanceState(bundle);
+
+        TextView temp = (TextView) findViewById(R.id.tempertureText);
+        String tempText = bundle.getString("temperture");
+        Log.d("MYBUG", tempText);
+        temp.setText(tempText);
+    }
+
+    public void updateWeather(View view) {
+        TextView text = (TextView)findViewById(R.id.tempertureText);
+        TextView city = (TextView)findViewById(R.id.cityName);
+        TextView desc = (TextView) findViewById(R.id.description);
+        RestConnectionCurrent rest = new RestConnectionCurrent(this);
+        TextView unitText = (TextView) findViewById(R.id.unitText);
+        String restResult = null;
+        try {
+            restResult = rest.execute("" + mLatitude,"" + mLongitude).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        JsonObject obj = transformStringToJson(restResult);
+        String temperature = getTempertureFromJson(obj);
+        getWeatherConditionFromJson(obj);
+
+        desc.setText(description);
+        text.setText(temperature);
+        unitText.setText(unitString);
+        city.setText(getCityFromJson(obj));
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("cityId");
+        city.setText(getCityFromJson(obj));
+        updateWeatherIcon(descriptionId);
+    }
+
+    public void updateWeatherIcon(int id) {
+        ImageView weatherIcon = (ImageView) findViewById(R.id.weathericon);
+        // CONTINUE FROM HERE!
+        if(true) {
+            weatherIcon.setBackgroundResource(R.drawable.icon_sunny);
         }
     }
 }
