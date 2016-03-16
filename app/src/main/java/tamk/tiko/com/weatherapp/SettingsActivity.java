@@ -1,23 +1,33 @@
 package tamk.tiko.com.weatherapp;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.RadioButton;
-import android.widget.Switch;
-import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Map;
-import java.util.Set;
-
+/**
+ * Settings activity. Contains radio buttons fro changing temperature unit between celsius
+ * and fahrenheit.
+ *
+ * @author Jani Timonen
+ * @version 1.0
+ * @since 1.7
+ */
 public class SettingsActivity extends AppCompatActivity {
+
+    /**
+     * Object containing all settings attributes.
+     */
     private AppSettings appSettings;
 
+    /**
+     * Called when activity is created.
+     *
+     * @param savedInstanceState bundle containing data of current instance.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +38,21 @@ public class SettingsActivity extends AppCompatActivity {
         TextView version = (TextView) findViewById(R.id.versionText);
         version.setText("Version: " + versionNumber);
 
-
         appSettings = new AppSettings();
         this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
+    /**
+     * Called when Android back button is pressed.
+     */
     @Override
     public void onBackPressed() {
         goToMainActivity();
     }
 
+    /**
+     * Returns to main activity and saves settings to xml.
+     */
     private void goToMainActivity() {
         changeUnit();
         saveSettings();
@@ -47,6 +62,9 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Changes unit according radio buttons.
+     */
     private void changeUnit() {
         RadioButton buttonC = (RadioButton) findViewById(R.id.radioC);
 
@@ -57,6 +75,9 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Called when activity is resumed.
+     */
     public void onResume() {
         super.onResume();
         loadSettings();
@@ -75,15 +96,19 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    /**
+     * Called when activity is paused.
+     */
     @Override
     public void onPause() {
         super.onPause();
         saveSettings();
-
-
-
     }
 
+    /**
+     * Saves unit settings to preferences xml.
+     */
     public void saveSettings() {
         SharedPreferences sharedPref = getSharedPreferences("com.tamk.tiko.latest_data", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -91,10 +116,12 @@ public class SettingsActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * Loads unit settings from preferences xml.
+     */
     public void loadSettings() {
         SharedPreferences sharedPref = getSharedPreferences("com.tamk.tiko.latest_data", MODE_PRIVATE);
         String temp =  sharedPref.getString(getString(R.string.unit), "1");
         appSettings.setUnit(Integer.parseInt(temp));
     }
-
 }
