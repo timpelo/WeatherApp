@@ -120,6 +120,10 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         String descTemp = sharedPref.getString(getString(R.string.condition_id), "1");
         descriptionId = Integer.parseInt(descTemp);
         description = sharedPref.getString(getString(R.string.condition), "N/A");
+        String latitudeTemp = sharedPref.getString(getString(R.string.latitude), "0");
+        String longitudeTemp = sharedPref.getString(getString(R.string.longitude), "0");
+        mLatitude = Double.parseDouble(latitudeTemp);
+        mLongitude = Double.parseDouble(longitudeTemp);
         unit = Integer.parseInt(unitTemp);
 
         if(unit != 0) {
@@ -143,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         editor.putString(getString(R.string.city), city);
         editor.putString(getString(R.string.fahrenheit), "" + temperatureF);
         editor.putString(getString(R.string.celsius), "" + temperatureC);
+        editor.putString(getString(R.string.longitude), "" + mLongitude);
+        editor.putString(getString(R.string.latitude), "" + mLatitude);
         editor.commit();
     }
 

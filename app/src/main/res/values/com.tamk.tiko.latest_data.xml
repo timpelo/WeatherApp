@@ -5,5 +5,8 @@
     <string name="condition">Cloudy</string>
     <string name="celsius">15</string>
     <string name="fahrenheit">25</string>
+    <!--1 = in units celsius, 2 = fahrenheit -->
     <string name="unit">1</string>
+    <string name="longitude">0</string>
+    <string name="latitude">0</string>
 </resources>
