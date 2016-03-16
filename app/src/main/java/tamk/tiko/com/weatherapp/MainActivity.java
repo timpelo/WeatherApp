@@ -1,6 +1,8 @@
 package tamk.tiko.com.weatherapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.content.Intent;
@@ -32,7 +34,12 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener{
     private String unitString = "°C";
+    private String city = "";
+    private String temperatureC;
+    private String temperatureF;
     private int unit = 1;
+    private String description;
+    private int descriptionId;
 
     protected GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
@@ -40,8 +47,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     protected double mLongitude = 0;
     protected boolean initText = true;
 
-    protected String description;
-    protected int descriptionId;
+
 
 
     @Override
@@ -53,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     public void openSettings(View view) {
+        saveSettings();
         Intent intent = new Intent(this, SettingsActivity.class);
-        intent.putExtra("unit", unit);
         startActivity(intent);
     }
 
@@ -71,24 +77,20 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         return obj;
     }
 
-    public String getTempertureFromJson(JsonObject obj) {
+    public void getTempertureFromJson(JsonObject obj) {
         JsonElement element = obj.get("main");
         JsonObject tmp = element.getAsJsonObject();
         String temperature = tmp.get("temp").toString();
+        float tempFloatC = 0;
+        float tempFloatF = 0;
 
         float tempFloat = Float.parseFloat(temperature);
-        tempFloat -= 272.15f;
-
-        int tempInt = Math.round(tempFloat);
-
-        // Used only if temperature will be shown with one decimal.
-        //temperature = "" + String.format("%.1f", tempInt) + "°c";
-
-        temperature = "" + tempInt;
-
-
-
-        return temperature;
+        tempFloatC = tempFloat - 272.15f;
+        tempFloatF =  tempFloatC * 1.8f + 32;
+        int tempCelInt = Math.round(tempFloatC);
+        temperatureC = "" + tempCelInt;
+        int tempFahInt = Math.round(tempFloatF);
+        temperatureF = "" + tempFahInt;
     }
 
     public void getWeatherConditionFromJson(JsonObject obj) {
@@ -105,32 +107,51 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
     }
 
-    public String getCityFromJson(JsonObject obj) {
+    public void getCityFromJson(JsonObject obj) {
         String city = obj.get("name").toString();
         city = city.replaceAll("^\"|\"$", "");
 
-        return city;
+        this.city =  city;
+    }
+
+    public void loadSettings() {
+        SharedPreferences sharedPref = getSharedPreferences("com.tamk.tiko.latest_data", MODE_PRIVATE);
+        String unitTemp =  sharedPref.getString(getString(R.string.unit), "1");
+        city = sharedPref.getString(getString(R.string.city), "N/A");
+        String descTemp = sharedPref.getString(getString(R.string.condition_id), "1");
+        descriptionId = Integer.parseInt(descTemp);
+        description = sharedPref.getString(getString(R.string.condition), "N/A");
+        unit = Integer.parseInt(unitTemp);
+
+        if(unit != 0) {
+            switch (unit) {
+            case 1:
+                unitString = "°C";
+                break;
+            case 2:
+                unitString = " F";
+                break;
+            }
+        }
+    }
+
+    public void saveSettings() {
+        SharedPreferences sharedPref = getSharedPreferences("com.tamk.tiko.latest_data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.unit), "" + unit);
+        editor.putString(getString(R.string.condition_id), "" + descriptionId);
+        editor.putString(getString(R.string.condition), "" + description);
+        editor.putString(getString(R.string.city), city);
+        editor.putString(getString(R.string.fahrenheit), "" + temperatureF);
+        editor.putString(getString(R.string.celsius), "" + temperatureC);
+        editor.commit();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        loadSettings();
 
-        Bundle data = getIntent().getExtras();
-        if(data != null) {
-            unit = data.getInt("unit");
-
-            if(unit != 0) {
-                switch (unit) {
-                    case 1:
-                        unitString = "°C";
-                        break;
-                    case 2:
-                        unitString = " F";
-                        break;
-                }
-            }
-        }
     }
 
     @Override
@@ -191,26 +212,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle bundle) {
-        TextView temp = (TextView) findViewById(R.id.tempertureText);
-        bundle.putString("temperture", temp.getText().toString());
-        Log.d("MYBUG", temp.getText().toString());
-        super.onSaveInstanceState(bundle);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle bundle) {
-        super.onRestoreInstanceState(bundle);
-
-        TextView temp = (TextView) findViewById(R.id.tempertureText);
-        String tempText = bundle.getString("temperture");
-        Log.d("MYBUG", tempText);
-        temp.setText(tempText);
-    }
-
     public void updateWeather(View view) {
-        TextView text = (TextView)findViewById(R.id.tempertureText);
+        TextView temperatureText = (TextView)findViewById(R.id.tempertureText);
         TextView city = (TextView)findViewById(R.id.cityName);
         TextView desc = (TextView) findViewById(R.id.description);
         RestConnectionCurrent rest = new RestConnectionCurrent(this);
@@ -224,17 +227,21 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             e.printStackTrace();
         }
         JsonObject obj = transformStringToJson(restResult);
-        String temperature = getTempertureFromJson(obj);
+        getTempertureFromJson(obj);
         getWeatherConditionFromJson(obj);
+        getCityFromJson(obj);
 
         desc.setText(description);
-        text.setText(temperature);
+
+        if(unit == 1) {
+            temperatureText.setText(temperatureC);
+        } else {
+            temperatureText.setText(temperatureF);
+        }
         unitText.setText(unitString);
-        city.setText(getCityFromJson(obj));
+        city.setText(this.city);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("cityId");
-        city.setText(getCityFromJson(obj));
         updateWeatherIcon(descriptionId);
     }
 

@@ -2,6 +2,7 @@
 <resources>
     <string name="city">Tampere</string>
     <string name="condition_id">250</string>
+    <string name="condition">Cloudy</string>
     <string name="celsius">15</string>
     <string name="fahrenheit">25</string>
     <string name="unit">1</string>
