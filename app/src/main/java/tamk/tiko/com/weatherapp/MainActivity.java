@@ -12,6 +12,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     protected double mLatitude = 0;
     protected double mLongitude = 0;
     protected boolean initText = true;
+    RotateAnimation r;
+    private static final float ROTATE_FROM = 0.0f;
+    private static final float ROTATE_TO = -2.5f * 360.0f;
+    ImageView refreshButton;
 
 
 
@@ -55,6 +61,17 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         setContentView(R.layout.activity_main);
         this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         buildGoogleApiClient();
+        refreshButton = (ImageView) findViewById(R.id.refreshButton);
+        r = new RotateAnimation(ROTATE_FROM, ROTATE_TO, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        r.setDuration((long) 1250);
+        r.setRepeatCount(0);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshButton.startAnimation(r);
+            }
+        });
     }
 
     public void openSettings(View view) {
