@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="tamk.tiko.com.weatherapp.MainActivity"
     tools:showIn="@layout/activity_forecast"
-    android:background="#1ea0fd"
+    android:background="@drawable/bg_forecast"
     android:id="@+id/content_forecast">
 
     <TextView
@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="CITY"
-        android:textColor="#ffffff"
-        android:textSize="30dp"
+        android:textColor="#1ea0fd"
+        android:textSize="40dp"
         android:id="@+id/cityName"/>
 
 
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="100dp"
         android:id="@+id/box1">
         <TextView
             android:layout_width="wrap_content"
@@ -53,6 +53,13 @@
             android:id="@+id/description1"
             android:textColor="#ffffff"
             android:textSize="15dp" />
+
+        <View
+            android:layout_alignBottom="@id/description1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="-30dp"
+            android:background="#ffffff"/>
 
         <ImageView
             android:layout_width="50dp"
@@ -115,6 +122,13 @@
             android:textColor="#ffffff"
             android:textSize="15dp" />
 
+        <View
+            android:layout_alignBottom="@id/description2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="-30dp"
+            android:background="#ffffff"/>
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -175,6 +189,13 @@
             android:textColor="#ffffff"
             android:textSize="15dp" />
 
+        <View
+            android:layout_alignBottom="@id/description3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="-30dp"
+            android:background="#ffffff"/>
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -205,5 +226,16 @@
             android:textSize="50dp" />
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="3-day forecast"
+        android:id="@+id/forecast_info"
+        android:layout_below="@+id/cityName"
+        android:layout_alignParentStart="true"
+        android:textColor="#1ea0fd"
+        android:textSize="15dp" />
 </RelativeLayout>
 

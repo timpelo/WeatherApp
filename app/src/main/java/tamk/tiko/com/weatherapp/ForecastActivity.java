@@ -162,6 +162,7 @@ public class ForecastActivity extends AppCompatActivity {
             JsonObject temper = element.getAsJsonObject();
             String temperature = temper.get("temp").toString();
             transFormTemp(Double.parseDouble(temperature));
+            desc = desc.replaceAll("^\"|\"$", "");
             descs.add(desc);
             descsIds.add(Integer.parseInt(descId));
         }
