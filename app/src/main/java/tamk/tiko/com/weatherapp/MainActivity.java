@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     public void getCityFromJson(JsonObject obj) {
         String city = obj.get("name").toString();
         city = city.replaceAll("^\"|\"$", "");
-
         this.city =  city;
     }
 
@@ -125,6 +124,9 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         mLatitude = Double.parseDouble(latitudeTemp);
         mLongitude = Double.parseDouble(longitudeTemp);
         unit = Integer.parseInt(unitTemp);
+
+        Log.d("PREF", description);
+        Log.d("PREF", city);
 
         if(unit != 0) {
             switch (unit) {
@@ -198,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     @Override
     public void onBackPressed() {
         Intent startMain = new Intent(Intent.ACTION_MAIN);
+        saveSettings();
         startMain.addCategory(Intent.CATEGORY_HOME);
         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(startMain);
@@ -212,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     @Override
     protected void onStop() {
         super.onStop();
+        saveSettings();
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
