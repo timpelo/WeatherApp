@@ -50,4 +50,28 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    public void onResume() {
+        super.onResume();
+
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null) {
+            int unit = extras.getInt("unit");
+            RadioButton c = (RadioButton) findViewById(R.id.radioC);
+            RadioButton f = (RadioButton) findViewById(R.id.radioF);
+
+            switch (unit) {
+                case 1:
+                    c.setChecked(true);
+                    break;
+                case 2:
+                    f.setChecked(true);
+                    break;
+                default:
+                    c.setChecked(true);
+                    break;
+            }
+        }
+    }
+
 }

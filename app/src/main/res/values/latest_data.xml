@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="city">Tampere</string>
+    <string name="condition_id">250</string>
+    <string name="celcius">15</string>
+    <string name="fahrenheit">25</string>
+</resources>

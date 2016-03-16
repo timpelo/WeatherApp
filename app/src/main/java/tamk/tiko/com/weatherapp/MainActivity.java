@@ -1,5 +1,6 @@
 package tamk.tiko.com.weatherapp;
 
+import android.app.Activity;
 import android.location.Location;
 import android.location.LocationManager;
 import android.content.Intent;
@@ -47,15 +48,14 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button settingsButton = (Button) findViewById(R.id.settingsButton);
         this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         buildGoogleApiClient();
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
+    }
+
+    public void openSettings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        intent.putExtra("unit", unit);
+        startActivity(intent);
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -171,8 +171,10 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
     @Override
     public void onBackPressed() {
-        finish();
-        System.exit(0);
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
     }
 
     @Override
