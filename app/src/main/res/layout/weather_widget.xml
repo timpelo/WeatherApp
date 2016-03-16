@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#09C"
+                android:background="#1ea0fd"
                 android:padding="@dimen/widget_margin">
 
     <TextView
@@ -12,7 +12,7 @@
         android:gravity="start"
         android:layout_margin="8dp"
         android:layout_marginStart="5dp"
-        android:background="#09C"
+        android:background="#1ea0fd"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/city"
         android:textColor="#ffffff"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:background="#09C"
+        android:background="#1ea0fd"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/celsius"
         android:textColor="#ffffff"
