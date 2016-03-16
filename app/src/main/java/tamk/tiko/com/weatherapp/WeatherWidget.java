@@ -10,10 +10,21 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 /**
- * Implementation of App Widget functionality.
+ * A weather widget that can also launch the app.
+ *
+ * @author Janne Koskinen
+ * @version 1.0
+ * @since 1.7
  */
 public class WeatherWidget extends AppWidgetProvider {
 
+    /**
+     * Updates the widget and launches the main app when pressed.
+     *
+     * @param context the context of the application.
+     * @param appWidgetManager a widget manager.
+     * @param appWidgetId a widget id.
+     */
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
@@ -75,22 +86,19 @@ public class WeatherWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
+    /**
+     * Calls the uppdateAppWidget-function from all existing widgets.
+     *
+     * @param context the context of the application.
+     * @param appWidgetManager a widget manager.
+     * @param appWidgetIds an array containing widget ids.
+     */
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
-    }
-
-    @Override
-    public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
     }
 }
 
