@@ -2,6 +2,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#1ea0fd"
+                android:id="@+id/widgetLayout"
+                android:clickable="true"
                 android:padding="@dimen/widget_margin">
 
     <TextView
@@ -33,22 +35,21 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/imageView"
+        android:layout_toStartOf="@+id/widgetIcon"
         android:layout_marginEnd="10dp"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:id="@+id/imageView2"
+        android:id="@+id/iconBg"
         android:layout_toEndOf="@id/tempView"/>
 
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:gravity="end"
-        android:id="@+id/imageView"
-        android:background="@drawable/icon_sunny"
+        android:id="@+id/widgetIcon"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_centerVertical="true"
