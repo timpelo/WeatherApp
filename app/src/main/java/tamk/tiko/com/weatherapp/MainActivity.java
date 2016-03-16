@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                 unitString = "°C";
                 break;
             case 2:
-                unitString = " F";
+                unitString = "°F";
                 break;
             }
         }
@@ -247,9 +247,30 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
     public void updateWeatherIcon(int id) {
         ImageView weatherIcon = (ImageView) findViewById(R.id.weathericon);
-        // CONTINUE FROM HERE!
-        if(true) {
-            weatherIcon.setBackgroundResource(R.drawable.icon_sunny);
+        Log.d("ICON", " " + id);
+        if(id >= 200 && id <= 232) {
+            weatherIcon.setImageResource(R.drawable.icon_thunder);
+        }
+        else if(id >= 300 && id <= 321) {
+            weatherIcon.setImageResource(R.drawable.icon_drizzle);
+        }
+        else if(id >= 500 && id <= 531) {
+            weatherIcon.setImageResource(R.drawable.icon_rain);
+        }
+        else if(id >= 600 && id <= 622) {
+            weatherIcon.setImageResource(R.drawable.icon_snow);
+        }
+        else if(id >= 701 && id <= 761) {
+            weatherIcon.setImageResource(R.drawable.icon_mist);
+        }
+        else if(id == 800) {
+            weatherIcon.setImageResource(R.drawable.icon_sunny);
+        }
+        else if(id >= 801 && id <= 804) {
+            weatherIcon.setImageResource(R.drawable.icon_cloudy);
+        }
+        else{
+            weatherIcon.setImageResource(R.drawable.icon_na);
         }
     }
 }
