@@ -5,12 +5,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+/**
+ * Splash screen for application.
+ *
+ * @author Jani Timonen
+ * @version 1.0
+ * @since 1.7
+ */
 public class SplashScreenActivity extends Activity {
 
-    /** Duration of wait **/
+    /**
+     * Duration of wait.
+     */
     private final int SPLASH_DISPLAY_LENGTH = 1000;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when activity is created. Shows splash screen for given time and then moves to
+     * main activity.
+     *
+     * @param icicle bundle containing instance data.
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);

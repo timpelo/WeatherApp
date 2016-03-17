@@ -1,14 +1,10 @@
 package tamk.tiko.com.weatherapp;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationManager;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +12,6 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -29,32 +24,100 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
 
-import org.json.JSONArray;
-
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Main activity. Contains data of current weather of current location. Handles updating data from
+ * openweathermap.org.
+ *
+ * @author Jani Timonen
+ * @version 1.0
+ * @since 1.7
+ */
 public class MainActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener{
+    /**
+     * String containing curren unit symbol.
+     */
     private String unitString = "°C";
+
+    /**
+     * String containing name of current city.
+     */
     private String city = "";
+
+    /**
+     * Temperature as celsius.
+     */
     private String temperatureC;
+
+    /**
+     * Temperature as fahrenheit.
+     */
     private String temperatureF;
+
+    /**
+     * Unit id for temperature.
+     */
     private int unit = 1;
+
+    /**
+     * Description for current weather.
+     */
     private String description;
+
+    /**
+     * If of current weather description.
+     */
     private int descriptionId;
 
+    /**
+     * Client for Google API.
+     */
     protected GoogleApiClient mGoogleApiClient;
+
+    /**
+     * Latest location.
+     */
     protected Location mLastLocation;
+
+    /**
+     * Latitude of current location.
+     */
     protected double mLatitude = 0;
+
+    /**
+     * Longitude of current location.
+     */
     protected double mLongitude = 0;
+
+
     protected boolean initText = true;
+
+    /**
+     * Animation for refresh button.
+     */
     RotateAnimation r;
+
+    /**
+     * Rotation degrees for animation.
+     */
     private static final float ROTATE_FROM = 0.0f;
+
+    /**
+     * Rotation degrees for animation.
+     */
     private static final float ROTATE_TO = -2.5f * 360.0f;
+
+    /**
+     * Refresh button.
+     */
     ImageView refreshButton;
 
-
-
-
+    /**
+     * On create method called when activity is created.
+     *
+     * @param savedInstanceState bundle containing instance data.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +137,20 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         });
     }
 
+    /**
+     * Changes view to settings activity.
+     *
+     * @param view current view.
+     */
     public void openSettings(View view) {
         saveSettings();
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Builds Google API Client for getting location.
+     */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -88,11 +159,22 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                 .build();
     }
 
+    /**
+     * Transform json string to json object.
+     *
+     * @param jsonString json as string.
+     * @return json as object.
+     */
     public JsonObject transformStringToJson(String jsonString) {
         JsonObject obj = new JsonParser().parse(jsonString).getAsJsonObject();
         return obj;
     }
 
+    /**
+     * Finds temperature from json object and stores values to variables.
+     *
+     * @param obj json object containing info of weather.
+     */
     public void getTempertureFromJson(JsonObject obj) {
         JsonElement element = obj.get("main");
         JsonObject tmp = element.getAsJsonObject();
@@ -109,6 +191,11 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         temperatureF = "" + tempFahInt;
     }
 
+    /**
+     * Finds weather condition and weather condition id from json object.
+     *
+     * @param obj json object containing weather condition and condition id.
+     */
     public void getWeatherConditionFromJson(JsonObject obj) {
         JsonArray element = obj.getAsJsonArray("weather");
         JsonElement tmp = element.get(0);
@@ -119,16 +206,23 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         description = description.replaceAll("^\"|\"$", "");
         this.description = description;
         this.descriptionId = descriptionId;
-
-
     }
 
+    /**
+     * Finds city name from json object and stores it to variable.
+     *
+     * @param obj json object containing weather information.
+     */
     public void getCityFromJson(JsonObject obj) {
         String city = obj.get("name").toString();
         city = city.replaceAll("^\"|\"$", "");
         this.city =  city;
     }
 
+    /**
+     * Loads settings from xml and sets them to correct variables. Changes unit string according
+     * to unit id.
+     */
     public void loadSettings() {
         SharedPreferences sharedPref = getSharedPreferences("com.tamk.tiko.latest_data", MODE_PRIVATE);
         String unitTemp =  sharedPref.getString(getString(R.string.unit), "1");
@@ -157,6 +251,9 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         }
     }
 
+    /**
+     * Saves current settings to xml file.
+     */
     public void saveSettings() {
         SharedPreferences sharedPref = getSharedPreferences("com.tamk.tiko.latest_data", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -171,13 +268,20 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         editor.commit();
     }
 
+    /**
+     * Called when activity is resumed.
+     */
     @Override
     public void onResume() {
         super.onResume();
         loadSettings();
-
     }
 
+    /**
+     * Called if Google API connection does success.
+     *
+     * @param connectionHint bundle containing connection data.
+     */
     @Override
     public void onConnected(Bundle connectionHint) {
         // Provides a simple way of getting a device's location and is well suited for
@@ -202,6 +306,11 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         }
     }
 
+    /**
+     * Called if connection to Google API is lost.
+     *
+     * @param cause id for disconnection cause.
+     */
     @Override
     public void onConnectionSuspended(int cause) {
         // The connection to Google Play services was lost for some reason. We call connect() to
@@ -209,11 +318,19 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         mGoogleApiClient.connect();
     }
 
+    /**
+     * Called if connection fails.
+     *
+     * @param connectionResult result for connection failure.
+     */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 
+    /**
+     * Called when Android back button is pressed. Exits application.
+     */
     @Override
     public void onBackPressed() {
         Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -223,12 +340,18 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         startActivity(startMain);
     }
 
+    /**
+     * Called when activity is started.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
     }
 
+    /**
+     * Called when activity is stopped.
+     */
     @Override
     protected void onStop() {
         super.onStop();
@@ -238,6 +361,11 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         }
     }
 
+    /**
+     * Updates weather from openweathermap.org.
+     *
+     * @param view current view.
+     */
     public void updateWeather(View view) {
         TextView temperatureText = (TextView)findViewById(R.id.tempertureText);
         TextView city = (TextView)findViewById(R.id.cityName);
@@ -271,6 +399,11 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         updateWeatherIcon(descriptionId);
     }
 
+    /**
+     * Updates weather icon according weather description id.
+     *
+     * @param id weather description id.
+     */
     public void updateWeatherIcon(int id) {
         ImageView weatherIcon = (ImageView) findViewById(R.id.weathericon);
         Log.d("ICON", " " + id);
@@ -300,6 +433,11 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         }
     }
 
+    /**
+     * Changes activity to forecast.
+     *
+     * @param v current view
+     */
     public void forecast(View v) {
         saveSettings();
         Intent intent = new Intent(this, ForecastActivity.class);
