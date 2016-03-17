@@ -16,15 +16,36 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * Created by juhis5 on 18.2.2016.
+ * Rest connection for getting todays weather.
+ *
+ * @author Juho Lahtinen
+ * @version 1.0
+ * @since 1.7
  */
 public class RestConnectionCurrent extends AsyncTask <String, Void, String>{
 
+    /**
+     * Context of host. Used to get the appid.
+     */
     private Context host;
+
+    /**
+     * Constructor gets the host context as a Parameter.
+     *
+     * @param host used to get the appid.
+     */
     public RestConnectionCurrent(Context host) {
         this.host = host;
     }
 
+    /**
+     * Seperate thread that gets the weather data
+     * from openweathermap.org. And converts it to string
+     * using the method convertStreamToString().
+     *
+     * @param params Gets latitude and longitude as strings.
+     * @return  Returns String weather information.
+     */
     @Override
     protected String doInBackground(String... params) {
         String lat = params[0];
@@ -58,6 +79,12 @@ public class RestConnectionCurrent extends AsyncTask <String, Void, String>{
         return result;
     }
 
+    /**
+     * Converts InputStream to String and returns it.
+     *
+     * @param is InputStream that gets converted to String
+     * @return Returns String that is converted from InputStream.
+     */
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();

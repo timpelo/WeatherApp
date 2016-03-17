@@ -1,12 +1,9 @@
 package tamk.tiko.com.weatherapp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,19 +18,65 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Activity for showing 3 days forecast for user.
+ *
+ * @author Juho Lahtinen
+ * @version 1.0
+ * @since 1.7
+ */
 public class ForecastActivity extends AppCompatActivity {
 
+    /**
+     * Longitude value from gps.
+     */
     double mLongitude = 0;
+
+    /**
+     * Latitude value from gps
+     */
     double mLatitude = 0;
+
+    /**
+     * City name of current location.
+     */
     String city = "";
+
+    /**
+     * Unit id for temperature.
+     */
     int unit = 0;
+
+    /**
+     * Symbol for temperature unit.
+     */
     String unitString = "";
 
+    /**
+     * Celsius temperatures for 3 day forecast.
+     */
     ArrayList<Integer> tmpsC = null;
+
+    /**
+     * Fahrenheit temperatures for 3 day forecast.
+     */
     ArrayList<Integer> tmpsF = null;
+
+    /**
+     * Descriptions for 3 day forecast.
+     */
     ArrayList<String> descs = null;
+
+    /**
+     * Description ids for 3 day forecast.
+     */
     ArrayList<Integer> descsIds = null;
 
+    /**
+     * On create method for this activity.
+     *
+     * @param savedInstanceState bundle containing instance data.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +86,9 @@ public class ForecastActivity extends AppCompatActivity {
         updateWeather();
     }
 
+    /**
+     * Used for loading settings from preferences xml.
+     */
     public void loadSettings() {
         SharedPreferences sharedPref = getSharedPreferences("com.tamk.tiko.latest_data", MODE_PRIVATE);
         String unitTemp =  sharedPref.getString(getString(R.string.unit), "1");
@@ -95,6 +141,9 @@ public class ForecastActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Calls weather update from openweathermap.org using REST connection.
+     */
     public void updateWeather() {
         TextView temp1 = (TextView)findViewById(R.id.tempertureText1);
         TextView temp2 = (TextView)findViewById(R.id.tempertureText2);
@@ -136,11 +185,13 @@ public class ForecastActivity extends AppCompatActivity {
             temp2.setText(tmpsF.get(1).toString());
             temp3.setText(tmpsF.get(2).toString());
         }
-
-
-
     }
 
+    /**
+     * Transform temperatures and descriptions from json to arrays.
+     *
+     * @param obj json object containing weather data.
+     */
     public void getTmpsAndDescs(JsonObject obj) {
         tmpsC = new ArrayList<Integer>();
         tmpsF = new ArrayList<Integer>();
@@ -168,6 +219,11 @@ public class ForecastActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Transforms temperature to celsius and fahrenheit.
+     *
+     * @param tempDouble temperature as kelvin.
+     */
     public void transFormTemp(double tempDouble) {
         float tempFloat = (float) tempDouble;
         float tempFloatC = 0;
@@ -181,17 +237,34 @@ public class ForecastActivity extends AppCompatActivity {
         tmpsF.add(tempFahInt);
     }
 
+    /**
+     * Creates new array lists.
+     *
+     * @param obj
+     */
     public void getDescs(JsonObject obj) {
         descs = new ArrayList<String>();
         descsIds = new ArrayList<Integer>();
 
     }
 
+    /**
+     * Converst string from openweathermap.org to json object.
+     *
+     * @param jsonString json in string format.
+     * @return json object containing weather data.
+     */
     public JsonObject transformStringToJson(String jsonString) {
         JsonObject obj = new JsonParser().parse(jsonString).getAsJsonObject();
         return obj;
     }
 
+    /**
+     * Updates weather icon with description id.
+     *
+     * @param id id of weather condition.
+     * @param weatherIcon imageview where icon will be set.
+     */
     public void updateWeatherIcon(int id, ImageView weatherIcon) {
         Log.d("ICON", " " + id);
         if(id >= 200 && id <= 232) {
