@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             @Override
             public void onClick(View v) {
                 refreshButton.startAnimation(r);
+                updateWeather(refreshButton);
             }
         });
     }
